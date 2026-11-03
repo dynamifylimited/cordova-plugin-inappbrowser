@@ -19,6 +19,7 @@
 -->
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-inappbrowser"
       version="3.2.0">
 
@@ -35,6 +36,22 @@
 
     <!-- android -->
     <platform name="android">
+        <framework src="androidx.webkit:webkit:1.14.0" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <queries>
+                <intent>
+                    <action android:name="org.chromium.intent.action.PAY" />
+                </intent>
+                <intent>
+                    <action android:name="org.chromium.intent.action.IS_READY_TO_PAY" />
+                </intent>
+                <intent>
+                    <action android:name="org.chromium.intent.action.UPDATE_PAYMENT_DETAILS" />
+                </intent>
+            </queries>
+        </config-file>
+
         <js-module src="www/inappbrowser.js" name="inappbrowser">
             <clobbers target="cordova.InAppBrowser.open" />
             <clobbers target="window.open" />

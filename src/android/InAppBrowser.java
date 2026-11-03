@@ -63,6 +63,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
@@ -977,6 +979,9 @@ public class InAppBrowser extends CordovaPlugin {
                 currentClient = new InAppBrowserClient(thatWebView, edittext, beforeload);
                 inAppWebView.setWebViewClient(currentClient);
                 WebSettings settings = inAppWebView.getSettings();
+                if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
+                    WebSettingsCompat.setPaymentRequestEnabled(settings, true);
+                }
                 settings.setJavaScriptEnabled(true);
                 settings.setJavaScriptCanOpenWindowsAutomatically(true);
                 settings.setBuiltInZoomControls(showZoomControls);
